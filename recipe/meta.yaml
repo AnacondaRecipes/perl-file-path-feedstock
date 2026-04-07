@@ -1,0 +1,43 @@
+{% set name = "perl-file-path" %}
+{% set version = "2.18" %}
+{% set sha256 = "980f0a17edb353df46e9cd7b357f9f5929cde0f80c45fd7a06cf7e0e8bd6addd" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://cpan.metacpan.org/authors/id/J/JK/JKEENAN/File-Path-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  run_exports:
+    - {{ pin_subpackage('perl-file-path', max_pin="x.x") }}
+
+requirements:
+  build:    # [unix]
+    - make  # [unix]
+  host:
+    - perl {{ perl }}
+    - perl-extutils-makemaker 7.78
+  run:
+    - perl
+
+test:
+  imports:
+    - File::Path
+
+about:
+  home: "https://metacpan.org/pod/File::Path"
+  license: GPL-1.0-or-later OR Artistic-1.0-Perl
+  license_family: Other
+  license_file:
+    - LICENSE
+  summary: "Create or remove directory trees."
+  description: |
+    File::Path provides functions to create or remove directory trees. The
+    module implements make_path (mkdir -p) and remove_tree (rm -r) style
+    operations portably across platforms.
+  doc_url: "https://metacpan.org/pod/File::Path"
+  dev_url: "https://github.com/jkeenan/File-Path"
